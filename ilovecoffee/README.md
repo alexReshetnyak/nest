@@ -68,4 +68,7 @@ $ nest g controller modules/abc --dry-run
 
 #create service
 $ nest g service
+
+#create module
+$ news g module module_name
 ```
