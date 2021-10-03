@@ -72,3 +72,15 @@ $ nest g service
 #create module
 $ news g module module_name
 ```
+## DOCKER
+
+```bash
+# install docker compose
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+$ docker-compose --version
+
+# run container
+$ docker-compose up -d
+
+```

@@ -22,11 +22,12 @@ export class CoffeesService {
     return coffee;
   }
 
-  create(coffee: any) {
-    this.coffees.push(coffee);
+  create(createCoffeeDto: any) {
+    this.coffees.push(createCoffeeDto);
+    return createCoffeeDto;
   }
 
-  update(id: number, coffee: any) {
+  update(id: number, updateCoffeeDto: any) {
     const existingCoffee = this.findOne(id);
 
     if (existingCoffee) {
