@@ -1,19 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 
 @Injectable()
 export class CoffeesService {
-  private coffees: Coffee[] = [
-    { id: 1, name: 'test', brand: 'test', flavors: ['test'] },
-  ];
+  constructor(
+    @InjectRepository(Coffee)
+    private readonly coffeeRepository: Repository<Coffee>,
+  ) {}
 
   findAll() {
-    return this.coffees;
+    return this.coffeeRepository.find();
   }
 
-  findOne(id: number) {
-    const coffee = this.coffees.find((coffee) => coffee.id === id);
+  async findOne(id: string) {
+    const coffee = await this.coffeeRepository.findOne(id);
 
     if (!coffee) {
       throw new NotFoundException(`Coffee with id ${id} not found`);
@@ -22,24 +27,27 @@ export class CoffeesService {
     return coffee;
   }
 
-  create(createCoffeeDto: any) {
-    this.coffees.push(createCoffeeDto);
-    return createCoffeeDto;
+  create(createCoffeeDto: CreateCoffeeDto) {
+    const coffee = this.coffeeRepository.create(createCoffeeDto);
+    return this.coffeeRepository.save(coffee);
   }
 
-  update(id: number, updateCoffeeDto: any) {
-    const existingCoffee = this.findOne(id);
+  async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
+    // find and update
+    const coffee = await this.coffeeRepository.preload({
+      id: +id,
+      ...updateCoffeeDto,
+    });
 
-    if (existingCoffee) {
-      // update
+    if (!coffee) {
+      throw new NotFoundException(`Coffee #${id} not found`);
     }
+
+    return this.coffeeRepository.save(coffee);
   }
 
-  remove(id: number) {
-    const index = this.coffees.findIndex((c) => c.id === id);
-
-    if (~index) {
-      this.coffees.splice(index, 1);
-    }
+  async remove(id: string) {
+    const coffee = await this.findOne(id);
+    return this.coffeeRepository.remove(coffee);
   }
 }
