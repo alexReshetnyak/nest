@@ -70,7 +70,10 @@ $ nest g controller modules/abc --dry-run
 $ nest g service
 
 #create module
-$ news g module module_name
+$ nest g module module_name
+
+#create class
+$ nest g class coffees/entities/flavor.entity --no-spec
 ```
 ## DOCKER
 

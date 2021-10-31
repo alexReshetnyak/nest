@@ -7,8 +7,11 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // remove any property from body object that DTO does not have
-      forbidNonWhitelisted: true, // return error if passed data has unknown properties
       transform: true, // create and instance of DTO class using request data
+      forbidNonWhitelisted: true, // return error if passed data has unknown properties
+      transformOptions: {
+        enableImplicitConversion: true, // automatically adds @Type decorators in dto
+      },
     }),
   );
   await app.listen(3000);
