@@ -66,14 +66,17 @@ $ nest g controller coffees
 # or with  --dry-run to test cli without creation new files
 $ nest g controller modules/abc --dry-run
 
-#create service
+# create service
 $ nest g service
 
-#create module
+# create module
 $ nest g module module_name
 
-#create class
+# create class
 $ nest g class coffees/entities/flavor.entity --no-spec
+
+# create migration
+$ npx typeorm migration:create -n CoffeeRefactor
 ```
 ## DOCKER
 
@@ -85,5 +88,24 @@ $ docker-compose --version
 
 # run container
 $ docker-compose up -d
+```
 
+## MIGRATION
+```bash
+# create migration
+$ npx typeorm migration:create -n CoffeeRefactor
+
+# build project
+$ npm run build
+
+# run migration command
+$ npx typeorm migration:run
+
+# revert migration
+$ npx typeorm migration:revert
+
+# generate migration automatically
+$ npm run build
+$ npx typeorm migration:generate -n SchemaSync
+$ npx typeorm migration:run
 ```
