@@ -32,6 +32,7 @@ export class CoffeeBrandsFactory {
     //   inject: [CoffeeBrandsFactory],
     // },
 
+    // * RESOLVER
     {
       provide: COFFEE_BRANDS,
       useFactory: async (connection: Connection): Promise<string[]> => {
