@@ -20,30 +20,29 @@ export class CoffeeBrandsFactory {
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
   exports: [CoffeesService],
   controllers: [CoffeesController],
-  // providers: [CoffeesService],
   providers: [
     CoffeesService,
     // { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] },
-    {
-      provide: COFFEE_BRANDS,
-      useFactory: (brandsFactory: CoffeeBrandsFactory) => {
-        return brandsFactory.create();
-      },
-      inject: [CoffeeBrandsFactory],
-      scope: Scope.DEFAULT,
-      // scope: Scope.TRANSIENT,
-    },
-
-    // * ASYNC RESOLVER
     // {
     //   provide: COFFEE_BRANDS,
-    //   useFactory: async (connection: Connection): Promise<string[]> => {
-    //     // const coffeeBrands = await connection.query('SELECT * ...');
-    //     const coffeeBrands = await Promise.resolve(['buddy brew', 'nescafe']);
-    //     return coffeeBrands;
+    //   useFactory: (brandsFactory: CoffeeBrandsFactory) => {
+    //     return brandsFactory.create();
     //   },
-    //   inject: [Connection],
+    //   inject: [CoffeeBrandsFactory],
+    //   scope: Scope.DEFAULT,
+    //   // scope: Scope.TRANSIENT,
     // },
+
+    // * ASYNC RESOLVER
+    {
+      provide: COFFEE_BRANDS,
+      useFactory: async (connection: Connection): Promise<string[]> => {
+        // const coffeeBrands = await connection.query('SELECT * ...');
+        const coffeeBrands = await Promise.resolve(['buddy brew', 'nescafe']);
+        return coffeeBrands;
+      },
+      inject: [Connection],
+    },
   ],
 })
 export class CoffeesModule {}
