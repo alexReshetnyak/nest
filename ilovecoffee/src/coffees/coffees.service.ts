@@ -1,14 +1,15 @@
-import { Event } from './../events/entities/event.entity';
 import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { Event } from './../events/entities/event.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { COFFEE_BRANDS } from './coffee.constants';
 import { Coffee } from './entities/coffee.entity';
 import { Flavor } from './entities/flavor.entity';
-import { COFFEE_BRANDS } from './coffee.constants';
 
 // @Injectable({ scope: Scope.REQUEST }) // New instance for each request
 // @Injectable({ scope: Scope.TRANSIENT }) // New instance creates for every use
@@ -21,9 +22,16 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+    private readonly configService: ConfigService,
   ) {
     // * Injected coffee brands from db
     console.log('Injected brands: ', coffeeBrands);
+    const databaseHost = this.configService.get(
+      // 'DATABASE_HOST',
+      'database.host',
+      'localhost',
+    );
+    console.log('DATABASE_HOST: ', databaseHost);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
