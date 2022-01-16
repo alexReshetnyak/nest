@@ -77,6 +77,9 @@ $ nest g class coffees/entities/flavor.entity --no-spec
 
 # create migration
 $ npx typeorm migration:create -n CoffeeRefactor
+
+# create filter
+$ nest g filter common/filters/http-exception
 ```
 ## DOCKER
 
