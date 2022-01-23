@@ -83,6 +83,15 @@ $ nest g filter common/filters/http-exception
 
 #create guard
 $ nest g guard common/guard/api-key
+
+#create interceptor
+$ nest g interceptor common/interceptors/wrap-response
+
+# create pipe
+$ nest g pipe common/pipes/parse-int
+
+# create middleware
+$ nest g middleware common/middleware/logging
 ```
 ## DOCKER
 

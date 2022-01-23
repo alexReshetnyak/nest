@@ -14,6 +14,8 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
+import { ParseIntPipe } from './../common/pipes/parse-int.pipe';
+import { Public } from 'src/common/decorators/public.decorator';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
@@ -25,14 +27,16 @@ export class CoffeesController {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  @SetMetadata('isPublic', true)
+  // @SetMetadata('isPublic', true) // or -
+  @Public()
   @Get('')
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     return this.coffeesService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.coffeesService.findOne(id);
   }
 
