@@ -80,6 +80,9 @@ $ npx typeorm migration:create -n CoffeeRefactor
 
 # create filter
 $ nest g filter common/filters/http-exception
+
+#create guard
+$ nest g guard common/guard/api-key
 ```
 ## DOCKER
 

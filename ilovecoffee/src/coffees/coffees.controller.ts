@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  SetMetadata,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
@@ -24,6 +25,7 @@ export class CoffeesController {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
+  @SetMetadata('isPublic', true)
   @Get('')
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeesService.findAll(paginationQuery);
