@@ -15,9 +15,9 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
-import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { Protocol } from './../common/decorators/protocol.decorator';
+import { Public } from './../common/decorators/public.decorator';
 import { ParseIntPipe } from './../common/pipes/parse-int.pipe';
-import { Public } from 'src/common/decorators/public.decorator';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
